@@ -56,9 +56,9 @@ import { render } from '@testing-library/react';
 class App extends Component {
   state = {
     persons: [
-      { name: 'Max', age: 28 },
-      { name: 'Sntosh', age: 25 },
-      { name: 'Manish', age: 24 }
+      { id: 'wert', name: 'Max', age: 28 },
+      { id: 'wsar', name: 'Sntosh', age: 25 },
+      { id: 'war', name: 'Manish', age: 24 }
     ],
     showPerson: false
   }
@@ -75,7 +75,16 @@ class App extends Component {
     if (this.state.showPerson) {
       persons = (
         <div>
-          <Person
+          {this.state.persons.map((person, index) => {
+            return <Person
+              click={() => this.deletePersonHandler(index)}
+              name={person.name}
+              age={person.age}
+              key={person.id}
+              changed={(event) => this.nameChangedHandler(event, person.id)}
+            />
+          })}
+          {/* <Person
             name={this.state.persons[0].name}
             age={this.state.persons[0].age} />
           <Person
@@ -83,7 +92,7 @@ class App extends Component {
             age={this.state.persons[1].age} />
           <Person
             name={this.state.persons[2].name}
-            age={this.state.persons[2].age} />
+            age={this.state.persons[2].age} /> */}
         </div>
 
       );
@@ -97,7 +106,7 @@ class App extends Component {
         <Person name="Karan" age="15">My hobbies are to play Kabddi and goes into deep meditation.</Person> */}
         <button
           style={style}
-          onClick={this.togglePersonHandler}>Switch Name</button>
+          onClick={this.togglePersonHandler}>Toggle Person</button>
         {/* {this.state.showPerson ?
           <div>
             <Person
@@ -110,7 +119,7 @@ class App extends Component {
               name={this.state.persons[2].name}
               age={this.state.persons[2].age} />
           </div> : null}*/}
-          {persons}
+        {persons}
       </div>
 
     )
@@ -130,8 +139,46 @@ class App extends Component {
    * Toggle function for hidding and showing person details
    */
   togglePersonHandler = () => {
+
     const doesShow = this.state.showPerson;
     this.setState({ showPerson: !doesShow })
+  }
+
+  /**
+   * Delete person handler for deleting person details
+   */
+  deletePersonHandler = (personIndex) => {
+    /**
+    * updating state immutabelly
+    */
+    // const persons = this.state.persons.slice();
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
+  }
+  /**
+   * Name chnaged handler
+   */
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+
+    //const person = Object.assign({},this.state.persons[personIndex])
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    // this.setState({
+    //   persons: [
+    //     { name: 'Monty', age: 28 },
+    //     { name: 'Munny', age: 25 },
+    //     { name: 'Satish', age: 32 }
+    //   ]
+    // })
   }
 
 
