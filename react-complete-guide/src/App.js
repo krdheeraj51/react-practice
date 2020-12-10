@@ -59,16 +59,17 @@ class App extends Component {
       { name: 'Max', age: 28 },
       { name: 'Sntosh', age: 25 },
       { name: 'Manish', age: 24 }
-    ]
+    ],
+    showPerson:false
   }
 
   render() {
-    const style ={
-      backgroundColor:'white',
-      font:'inherit',
-      border:'1px solid blue',
-      padding:'8px',
-      cursor:'pointer'
+    const style = {
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
     };
     return (
       <div className="App">
@@ -77,18 +78,21 @@ class App extends Component {
         {/* <Person name="Santosh" age="25"></Person>
         <Person name="Gulshan" age="24"></Person>
         <Person name="Karan" age="15">My hobbies are to play Kabddi and goes into deep meditation.</Person> */}
-        <button 
-         style={style} 
-        onClick={this.switchNameHandler}>Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age} />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age} />
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age} />
+        <button
+          style={style}
+          onClick={this.togglePersonHandler}>Switch Name</button>
+        {this.state.showPerson ? 
+          <div>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age} />
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age} />
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age} />
+        </div>:null}
       </div>
 
     )
@@ -103,6 +107,13 @@ class App extends Component {
         { name: "Manish", age: 34 }
       ]
     })
+  }
+/**
+ * Toggle function for hidding and showing person details
+ */
+  togglePersonHandler = () =>{
+     const doesShow = this.state.showPerson;
+     this.setState({showPerson:!doesShow})
   }
 
 
