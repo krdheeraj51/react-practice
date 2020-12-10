@@ -60,7 +60,7 @@ class App extends Component {
       { name: 'Sntosh', age: 25 },
       { name: 'Manish', age: 24 }
     ],
-    showPerson:false
+    showPerson: false
   }
 
   render() {
@@ -71,6 +71,23 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer'
     };
+    let persons = null;
+    if (this.state.showPerson) {
+      persons = (
+        <div>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age} />
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age} />
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age} />
+        </div>
+
+      );
+    }
     return (
       <div className="App">
         <h1>Hi, I'm a React APP</h1>
@@ -81,18 +98,19 @@ class App extends Component {
         <button
           style={style}
           onClick={this.togglePersonHandler}>Switch Name</button>
-        {this.state.showPerson ? 
+        {/* {this.state.showPerson ?
           <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age} />
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age} />
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age} />
-        </div>:null}
+            <Person
+              name={this.state.persons[0].name}
+              age={this.state.persons[0].age} />
+            <Person
+              name={this.state.persons[1].name}
+              age={this.state.persons[1].age} />
+            <Person
+              name={this.state.persons[2].name}
+              age={this.state.persons[2].age} />
+          </div> : null}*/}
+          {persons}
       </div>
 
     )
@@ -108,12 +126,12 @@ class App extends Component {
       ]
     })
   }
-/**
- * Toggle function for hidding and showing person details
- */
-  togglePersonHandler = () =>{
-     const doesShow = this.state.showPerson;
-     this.setState({showPerson:!doesShow})
+  /**
+   * Toggle function for hidding and showing person details
+   */
+  togglePersonHandler = () => {
+    const doesShow = this.state.showPerson;
+    this.setState({ showPerson: !doesShow })
   }
 
 
