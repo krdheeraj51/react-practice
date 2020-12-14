@@ -1,6 +1,6 @@
 // import React, { useState } from 'react';
 import React, { Component } from 'react';
-import Person from './Person/Person';
+import Person from '../components/Persons/Person/Person';
 import './App.css';
 // import Radium from 'radium';
 // import { render } from '@testing-library/react';
