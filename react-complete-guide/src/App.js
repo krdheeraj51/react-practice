@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import Person from './Person/Person';
 import './App.css';
-import { render } from '@testing-library/react';
+// import Radium from 'radium';
+// import { render } from '@testing-library/react';
+import styled from 'styled-components';
 
 /**
  * functional Component
@@ -49,6 +51,22 @@ import { render } from '@testing-library/react';
 // }
 // export default App;
 
+const StyledButton = styled.button`
+  background-color: ${props => props.alt ? 'red' :'green'};
+  color: white;
+  font: inherit;
+  border: 1px solid blue';
+  padding: 8px;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: ${props => props.alt ? 'salmon':'lightgreen'};
+    color:black;
+  }
+`;
+
+
+
 
 /**
  * class component 
@@ -65,12 +83,22 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover':{
+        backgroundColor:'lightgreen',
+        color:'black'
+      }
     };
+
+
+
+
+
     let persons = null;
     if (this.state.showPerson) {
       persons = (
@@ -96,17 +124,46 @@ class App extends Component {
         </div>
 
       );
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'lightred',
+        color: 'black'
+      }
     }
+    //permanent color changed
+    // let classes =['red','bold'];
+    // color chnaged dynamically based on condition
+    let classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red'); //red
+    } if (this.state.persons.length <= 1) {
+      classes.push('bold'); //red, bold
+    }
+
+
     return (
       <div className="App">
         <h1>Hi, I'm a React APP</h1>
-        <p>This is really working.</p>
+
+
+        <p className={classes.join(' ')}>This is really working.</p>
         {/* <Person name="Santosh" age="25"></Person>
         <Person name="Gulshan" age="24"></Person>
         <Person name="Karan" age="15">My hobbies are to play Kabddi and goes into deep meditation.</Person> */}
-        <button
+        {/* <button
           style={style}
-          onClick={this.togglePersonHandler}>Toggle Person</button>
+          onClick={this.togglePersonHandler}>Toggle Person</button> */}
+        
+        
+        {/* add styled Button */}
+         <StyledButton alt={this.state.showPerson} onClick={this.togglePersonHandler}>
+         Toggle Person
+         </StyledButton>
+
+
+        
+
+
         {/* {this.state.showPerson ?
           <div>
             <Person
@@ -184,6 +241,7 @@ class App extends Component {
 
 }
 
+// export default Radium(App);
 export default App;
 
 // function App() {
